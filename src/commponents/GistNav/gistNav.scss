@@ -21,6 +21,7 @@
       justify-content: space-between;
       align-items: center;
       margin: $main-spacing 0;
+      background-color: $col-level-1;
       &__sortOrder {
         width: $button-size-large;
         &:hover {

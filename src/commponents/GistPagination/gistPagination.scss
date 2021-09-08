@@ -1,1 +1,36 @@
 @import "../../var.scss";
+
+.gistPagination {
+  max-width: $container-width;
+  margin: 1em auto;
+  background-color: $col-level-1;
+  &__bar{
+    font: $font-level-1;
+    display: flex;
+    justify-content: center;
+    border: 1px solid $col-level-2;
+    &__button {
+      text-transform: uppercase;
+      padding: $main-spacing;
+      cursor: pointer;
+      &:hover {
+        background-color: $col-level-2;
+      }
+    }
+  }
+}
+
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+.left {
+  border-color: $col-level-3 transparent $col-level-3 $col-level-3;
+}
+.center {
+  border-color: $col-level-3;
+  cursor: none;
+}
+.right {
+  border-color: $col-level-3 $col-level-3 $col-level-3 transparent;
+}

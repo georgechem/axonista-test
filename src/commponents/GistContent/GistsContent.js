@@ -48,14 +48,17 @@ const GistsContent = ({gist}) => {
                 <hr/>
                 <div className="gistContent__body">
                     <div className="gistsContent__body__top">
-                        <img className="gistsContent__body__avatar" src={gist.owner.avatar_url}/>
+                        <img className="gistsContent__body__avatar" src={gist?.owner.avatar_url}/>
                         <div className="gistsContent__body__link">
                             <img src={svgLink}/>
-                            <a href={gist.owner.html_url} target="_blank">Go to Repository</a>
+                            <a href={gist?.owner.html_url} target="_blank">Go to Repository</a>
                         </div>
                     </div>
                     <div className="gistsContent__body__info">
-                        updated:{formatDate(gist.updated_at, 'full')}
+                        updated:{formatDate(gist?.updated_at, 'full')}
+                        <div className="gistsContent__body__info__desc">
+                            <p><em>{gist?.description}</em></p>
+                        </div>
                     </div>
                 </div>
 

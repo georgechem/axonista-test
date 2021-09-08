@@ -10,6 +10,7 @@ import GistPagination from "./commponents/GistPagination/GistPagination";
 
 const App = () => {
     const [gists, setGists] = useState(null);
+    const [gistsCopy, setGistsCopy] = useState(null);
     const [sortingOrder, setSortingOrder] = useState('desc');
     const [sortingAttribute, setSortingAttribute] = useState('login');
     const [pageSize, setPageSize] = useState(2);
@@ -26,7 +27,7 @@ const App = () => {
         sortGists();
     }
 
-    const countAllPages = (gists) => {
+    const countAllPages = () => {
         if(gists !== null){
             let numberOfPages = Math.floor(gists?.length / pageSize);
             const rest = gists?.length % pageSize;
@@ -37,16 +38,45 @@ const App = () => {
         }
     }
 
+    const findGistsWithContent = (content) => {
+
+        const findings = [];
+        if(sortingAttribute === 'login'){
+            gists.forEach(gist => {
+                if(gist?.owner?.login.search(content) !== -1){
+                    findings.push(gist);
+                }
+            })
+        }
+        else if(sortingAttribute === 'description'){
+            gists.forEach(gist => {
+                if(gist?.description.search(content) !== -1){
+                    findings.push(gist);
+                }
+            });
+        }
+        setGists(findings);
+    }
+
+    const onInputChange = (e) => {
+        const content = e.target.value;
+        if(sortingAttribute === 'date') return;
+        findGistsWithContent(content);
+    }
+
     const sortGists = () => {
         const compareStrings = (a, b, type = sortingAttribute) => {
             let gistA = '';
             let gistB = '';
             if(sortingAttribute === 'login'){
-                gistA = a.owner.login.toLowerCase();
-                gistB = b.owner.login.toLowerCase();
+                gistA = a?.owner.login.toLowerCase();
+                gistB = b?.owner.login.toLowerCase();
             }else if(sortingAttribute === 'date'){
-                gistA = a.updated_at;
-                gistB = b.updated_at;
+                gistA = a?.updated_at;
+                gistB = b?.updated_at;
+            }else if(sortingAttribute === 'description'){
+                gistA = a?.description.toLowerCase();
+                gistB = b?.description.toLowerCase();
             }
 
             if(gistA < gistB){
@@ -85,6 +115,7 @@ const App = () => {
             .then(data => {
                 //console.log(data);
                 setGists(data);
+                setGistsCopy(data);
             })
             .catch(err => {
                 console.log(err);
@@ -97,15 +128,20 @@ const App = () => {
         <div>
             <GistsNav
                 gists={gists}
+                setGists={setGists}
+                gistsCopy={gistsCopy}
                 onSortingOrderChange={onSortingOrderChange}
 
                 sortingAttribute={sortingAttribute}
                 setSortingAttribute={setSortingAttribute}
+
+                onInputChange={onInputChange}
             />
             {gists?.map((gist, key) => <GistsContent
                 key={'gistKey_' + key}
                 gist={gist}
             />)}
+            <GistPagination/>
         </div>
     );
 };

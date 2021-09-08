@@ -10,28 +10,21 @@ import GistPagination from "./commponents/GistPagination/GistPagination";
 
 const App = () => {
     const [gists, setGists] = useState(null);
-    const [sorting, setSorting] = useState('desc');
+    const [sortingOrder, setSortingOrder] = useState('desc');
+    const [sortingAttribute, setSortingAttribute] = useState('login');
     const [pageSize, setPageSize] = useState(2);
 
     const onSortingOrderChange = () => {
         const el = document.getElementsByClassName('gistNav__top__buttons__sortOrder')[0];
-        if(sorting === 'asc'){
-            setSorting( 'desc');
+        if(sortingOrder === 'asc'){
+            setSortingOrder( 'desc');
             el.classList.remove('rotate180deg');
         }else{
-            setSorting( 'asc');
+            setSortingOrder( 'asc');
             el.classList.add('rotate180deg');
         }
         sortGists();
     }
-    /*
-    useEffect(()=>{
-        if(gists !== null){
-            sortGists(gists);
-            console.log(gists);
-        }
-
-    },[sorting]);*/
 
     const countAllPages = (gists) => {
         if(gists !== null){
@@ -45,9 +38,17 @@ const App = () => {
     }
 
     const sortGists = () => {
-        const compareStrings = (a, b) => {
-            let gistA = a.owner.login.toLowerCase();
-            let gistB = b.owner.login.toLowerCase();
+        const compareStrings = (a, b, type = sortingAttribute) => {
+            let gistA = '';
+            let gistB = '';
+            if(sortingAttribute === 'login'){
+                gistA = a.owner.login.toLowerCase();
+                gistB = b.owner.login.toLowerCase();
+            }else if(sortingAttribute === 'date'){
+                gistA = a.updated_at;
+                gistB = b.updated_at;
+            }
+
             if(gistA < gistB){
                 return -1;
             }
@@ -56,13 +57,13 @@ const App = () => {
             }
             return 0;
         }
-            if(sorting === 'desc'){
+            if(sortingOrder === 'desc'){
                 //gistsCopy.sort((a, b) => b.owner.id - a.owner.id);
-                gists.sort((a,b) => compareStrings(a, b));
+                gists.sort((a,b) => compareStrings(a, b, sortingAttribute));
 
             }else{
                 //gistsCopy.sort((a,b) => a.owner.id- b.owner.id);
-                gists.sort((a, b) => compareStrings(b, a));
+                gists.sort((a, b) => compareStrings(b, a, sortingAttribute));
             }
 
         setGists(gists);
@@ -95,10 +96,11 @@ const App = () => {
     return (
         <div>
             <GistsNav
-                sorting={sorting}
-                setSorting={setSorting}
                 gists={gists}
                 onSortingOrderChange={onSortingOrderChange}
+
+                sortingAttribute={sortingAttribute}
+                setSortingAttribute={setSortingAttribute}
             />
             {gists?.map((gist, key) => <GistsContent
                 key={'gistKey_' + key}

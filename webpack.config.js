@@ -6,7 +6,7 @@ module.exports = {
     watch: true,
     entry: path.join(__dirname, "src", "index.js"),
     output: {
-        path:path.resolve(__dirname),
+        path:path.resolve(__dirname + "/public"),
     },
     optimization: {
         splitChunks: {

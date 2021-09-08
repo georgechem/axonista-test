@@ -1,0 +1,60 @@
+@import "../../var.scss";
+
+
+
+
+.gists {
+  &Content {
+    max-width: $container-width;
+    margin: 1em auto;
+    background-color: $col-level-1;
+    padding: $main-spacing;
+    border: 1px solid $col-level-2;
+
+    &__item {
+      border: 1px solid $col-level-0;
+    }
+    & + hr {
+      border-color: $col-level-3;
+      margin: 1em 0;
+    }
+    &__header {
+      display: flex;
+      align-content: stretch;
+      justify-content: space-between;
+      background-color: $col-level-2;
+      &__bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: $secondary-spacing;
+        & > span {
+          display: inline-block;
+          margin: $secondary-spacing;
+          min-width: 200px;
+        }
+      }
+    }
+    &__body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__avatar {
+        max-width: 64px;
+      }
+      &__top {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: $main-spacing;
+      }
+      &__top a {
+        color: $col-level-3;
+        padding: $main-spacing;
+      }
+      &__link {
+        display: flex;
+      }
+    }
+  }
+}

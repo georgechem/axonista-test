@@ -7,8 +7,7 @@ import svgDate from './icons/schedule_black_24dp.svg';
 import svgUser from './icons/person_black_24dp.svg';
 import svgLink from './icons/link_black_24dp.svg';
 
-const GistsContent = ({gist, gists}) => {
-
+const GistsContent = ({gist}) => {
     /**
      * Adds leading zero to number
      * @param number
@@ -23,15 +22,6 @@ const GistsContent = ({gist, gists}) => {
         }
     }
 
-    const returnObjectFiles = () => {
-        const items = [];
-        gists.forEach((gist) => {
-            for(const [key, obj] of Object.entries(gist.files)){
-                items.push(obj);
-            }
-        });
-        return items;
-    }
     /**
      * Format date to be more user friendly
      * @param dateString
@@ -41,14 +31,12 @@ const GistsContent = ({gist, gists}) => {
     const formatDate = (dateString, mode='date') => {
         if(dateString !== null){
             const date = new Date(dateString);
-
             if(mode === 'date'){
                 return `${addLeadingZero(date.getDate())}/${addLeadingZero(date.getMonth() + 1)}/${date.getFullYear()}`;
             }else{
                 return `${date.getHours()}:${addLeadingZero(date.getMinutes())}:${addLeadingZero(date.getSeconds())} - 
                 ${addLeadingZero(date.getDate())}/${addLeadingZero(date.getMonth() + 1)}/${date.getFullYear()}`;
             }
-
         }
         return 'N/A';
     }
@@ -80,14 +68,8 @@ const GistsContent = ({gist, gists}) => {
                         <div className="gistsContent__body__info__desc">
                             <p><em>{gist?.description}</em></p>
                         </div>
-                        <div className="gistsContent__body__info__filesGroup">
-                            {returnObjectFiles().forEach((file, key)=>{
-                                {file?.filename};
-                            })}
-                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
@@ -95,7 +77,6 @@ const GistsContent = ({gist, gists}) => {
 
 GistsContent.propTypes = {
     gist: PropTypes.object.isRequired,
-    gists: PropTypes.array.isRequired
 }
 
 export default GistsContent;

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 
 import svgSortOrder from './icons/sort_black_24dp.svg';
 import svgByDate from './icons/date_range_black_24dp.svg';
@@ -7,19 +8,21 @@ import svgByPerson from './icons/person_black_24dp.svg';
 
 import './gistNav.scss';
 
-
-
 const GistsNav = ({
-                      gists,
-                      setGists,
-                      gistsCopy,
-                      onSortingOrderChange,
-                      sortingAttribute,
-                      setSortingAttribute,
-                      onInputChange}) => {
+                      setGists, gistsCopy,
+                      onSortingOrderChange, sortingAttribute,
+                      setSortingAttribute, onInputChange,
+                      onSelectPerPage,}) => {
 
+    /**
+     * array of elements ID for all SortBy button in Nav
+     * @type {string[]}
+     */
     const allSwitches = ['sortByDateSwitch', 'sortByDescriptionSwitch', 'sortByLoginSwitch'];
 
+    /**
+     * Remove certain class from all SortBy buttons
+     */
     const turnOfAllSwitches = () => {
         allSwitches.forEach((switchButton) => {
             const el = document?.getElementById(switchButton);
@@ -28,17 +31,27 @@ const GistsNav = ({
             }
         })
     }
-
+    /**
+     * Make sure one of button is pressed when application starts
+     */
     useEffect(()=>{
         onSortBy('sortByLoginSwitch', sortingAttribute);
     },[]);
 
-    const onBackSpaceClick = (e) => {
-        if(e.key === 'Backspace' || e.code === 'Backspace'){
+    /**
+     * Restore all gists as user modifying input value
+     * @param event
+     */
+    const onBackSpaceClick = (event) => {
+        if(event.key === 'Backspace' || event.code === 'Backspace'){
             setGists(gistsCopy);
         }
     }
-
+    /**
+     * Set SortingAttribute & make button pressed by adding class
+     * @param elementId
+     * @param state
+     */
     const onSortBy = (elementId, state) => {
         const el = document?.getElementById(elementId);
         if(el !== null){
@@ -48,6 +61,7 @@ const GistsNav = ({
         }
 
     }
+
     const onSortByDateSwitchClick = () => {
         onSortBy('sortByDateSwitch', 'date');
     }
@@ -61,14 +75,27 @@ const GistsNav = ({
     return (
         <div className="gistNav">
             <div className="gistNav__top">
-                <input
-                    id="inputSearch"
-                    className="gistNav__top__input"
-                    type="text"
-                    name="input"
-                    onChange={onInputChange}
-                    onKeyDown={onBackSpaceClick}
-                />
+                <div className="gistNav__top__search">
+                    <input
+                        id="inputSearch"
+                        className="gistNav__top__input"
+                        type="text"
+                        name="input"
+                        onChange={onInputChange}
+                        onKeyDown={onBackSpaceClick}
+                    />
+                    <select
+                        className="gistNav__top__select"
+                        id="itemsPerPage"
+                        name="itemsPerPage"
+                        onChange={onSelectPerPage}
+                    >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
                 <div className="gistNav__top__buttons">
                     <img
                         title="Sort Order"
@@ -105,5 +132,15 @@ const GistsNav = ({
         </div>
     );
 };
+
+GistsNav.propTypes = {
+    setGists: PropTypes.func.isRequired,
+    gistsCopy: PropTypes.array.isRequired,
+    onSortingOrderChange: PropTypes.func.isRequired,
+    sortingAttribute: PropTypes.string.isRequired,
+    setSortingAttribute: PropTypes.func.isRequired,
+    onInputChange: PropTypes.func.isRequired,
+    onSelectPerPage: PropTypes.func.isRequired
+}
 
 export default GistsNav;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './gistContent.scss';
 
@@ -6,8 +7,13 @@ import svgDate from './icons/schedule_black_24dp.svg';
 import svgUser from './icons/person_black_24dp.svg';
 import svgLink from './icons/link_black_24dp.svg';
 
-const GistsContent = ({gist}) => {
+const GistsContent = ({gist, gists}) => {
 
+    /**
+     * Adds leading zero to number
+     * @param number
+     * @returns {string}
+     */
     const addLeadingZero = (number) => {
         let value = parseInt(number);
         if(value < 10){
@@ -17,6 +23,21 @@ const GistsContent = ({gist}) => {
         }
     }
 
+    const returnObjectFiles = () => {
+        const items = [];
+        gists.forEach((gist) => {
+            for(const [key, obj] of Object.entries(gist.files)){
+                items.push(obj);
+            }
+        });
+        return items;
+    }
+    /**
+     * Format date to be more user friendly
+     * @param dateString
+     * @param mode
+     * @returns {string}
+     */
     const formatDate = (dateString, mode='date') => {
         if(dateString !== null){
             const date = new Date(dateString);
@@ -55,9 +76,14 @@ const GistsContent = ({gist}) => {
                         </div>
                     </div>
                     <div className="gistsContent__body__info">
-                        updated:{formatDate(gist?.updated_at, 'full')}
+                        <p>updated:{formatDate(gist?.updated_at, 'full')}</p>
                         <div className="gistsContent__body__info__desc">
                             <p><em>{gist?.description}</em></p>
+                        </div>
+                        <div className="gistsContent__body__info__filesGroup">
+                            {returnObjectFiles().forEach((file, key)=>{
+                                {file?.filename};
+                            })}
                         </div>
                     </div>
                 </div>
@@ -66,5 +92,10 @@ const GistsContent = ({gist}) => {
         </div>
     );
 };
+
+GistsContent.propTypes = {
+    gist: PropTypes.object.isRequired,
+    gists: PropTypes.array.isRequired
+}
 
 export default GistsContent;

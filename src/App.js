@@ -2,19 +2,21 @@ import React, {useState, useEffect} from 'react';
 import GistsNav from "./commponents/GistNav/GistsNav";
 import GistsContent from "./commponents/GistContent/GistsContent";
 
-import brand1 from './img/branding.png';
-
 import './style.scss';
 import GistPagination from "./commponents/GistPagination/GistPagination";
 
 
 const App = () => {
-    const [gists, setGists] = useState(null);
-    const [gistsCopy, setGistsCopy] = useState(null);
+    const [gists, setGists] = useState([]);
+    const [gistsCopy, setGistsCopy] = useState([]);
     const [sortingOrder, setSortingOrder] = useState('desc');
     const [sortingAttribute, setSortingAttribute] = useState('login');
-    const [pageSize, setPageSize] = useState(2);
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(5);
 
+    /**
+     * Handle Sorting Icon appearance change and fires sorting function
+     */
     const onSortingOrderChange = () => {
         const el = document.getElementsByClassName('gistNav__top__buttons__sortOrder')[0];
         if(sortingOrder === 'asc'){
@@ -26,59 +28,55 @@ const App = () => {
         }
         sortGists();
     }
-
-    const countAllPages = () => {
-        if(gists !== null){
-            let numberOfPages = Math.floor(gists?.length / pageSize);
-            const rest = gists?.length % pageSize;
-            if(rest !== 0){
-                numberOfPages++;
-            }
-            return numberOfPages;
-        }
-    }
-
+    /**
+     * Limit number of gists to those who met searching criteria
+     * @param content
+     */
     const findGistsWithContent = (content) => {
 
         const findings = [];
         if(sortingAttribute === 'login'){
             gists.forEach(gist => {
-                if(gist?.owner?.login.search(content) !== -1){
+                if(gist?.owner?.login?.search(content) !== -1){
                     findings.push(gist);
                 }
             })
         }
         else if(sortingAttribute === 'description'){
             gists.forEach(gist => {
-                if(gist?.description.search(content) !== -1){
+                if(gist?.description?.search(content) !== -1){
                     findings.push(gist);
                 }
             });
         }
         setGists(findings);
     }
-
-    const onInputChange = (e) => {
-        const content = e.target.value;
+    /**
+     * Handle every change of content in input element | sortingByDate excluded
+     * @param event
+     */
+    const onInputChange = (event) => {
+        const content = event.target.value;
         if(sortingAttribute === 'date') return;
         findGistsWithContent(content);
     }
-
+    /**
+     * Sorting gists by - LOGIN | DATE | DESCRIPTION and ASC | DESC
+     */
     const sortGists = () => {
         const compareStrings = (a, b, type = sortingAttribute) => {
             let gistA = '';
             let gistB = '';
             if(sortingAttribute === 'login'){
-                gistA = a?.owner.login.toLowerCase();
-                gistB = b?.owner.login.toLowerCase();
+                gistA = a?.owner?.login?.toLowerCase();
+                gistB = b?.owner?.login?.toLowerCase();
             }else if(sortingAttribute === 'date'){
                 gistA = a?.updated_at;
                 gistB = b?.updated_at;
             }else if(sortingAttribute === 'description'){
-                gistA = a?.description.toLowerCase();
-                gistB = b?.description.toLowerCase();
+                gistA = a?.description?.toLowerCase();
+                gistB = b?.description?.toLowerCase();
             }
-
             if(gistA < gistB){
                 return -1;
             }
@@ -95,16 +93,37 @@ const App = () => {
                 //gistsCopy.sort((a,b) => a.owner.id- b.owner.id);
                 gists.sort((a, b) => compareStrings(b, a, sortingAttribute));
             }
-
         setGists(gists);
-
-
+    }
+    /**
+     * NEXT page
+     */
+    const onNextPageClick = () => {
+        setPage(page + 1);
+    }
+    /**
+     * PREV page
+     */
+    const onPrevPageClick = () => {
+        if(page === 1) return;
+        setPage(page - 1);
+    }
+    /**
+     * Set elements per Page
+     */
+    const onSelectPerPage = (e) => {
+        const options = e.target.options;
+        const index = e.target.options.selectedIndex;
+        const value = parseInt(options[index].value);
+        setPerPage(value);
     }
 
-
+    /**
+     * Fetch data from Github API
+     */
     useEffect(()=>{
-
-        fetch('https://api.github.com/gists/public?per_page=7',{
+        const url = `https://api.github.com/gists?page=${page}&per_page=${perPage}`;
+        fetch(url,{
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -113,16 +132,13 @@ const App = () => {
         })
             .then(res => res.json())
             .then(data => {
-                //console.log(data);
                 setGists(data);
                 setGistsCopy(data);
             })
             .catch(err => {
                 console.log(err);
             });
-
-
-    },[]);
+    },[page, perPage]);
 
     return (
         <div>
@@ -136,12 +152,18 @@ const App = () => {
                 setSortingAttribute={setSortingAttribute}
 
                 onInputChange={onInputChange}
+                onSelectPerPage={onSelectPerPage}
             />
             {gists?.map((gist, key) => <GistsContent
                 key={'gistKey_' + key}
                 gist={gist}
+                gists={gists}
             />)}
-            <GistPagination/>
+            <GistPagination
+                onNextPageClick={onNextPageClick}
+                page={page}
+                onPrevPageClick={onPrevPageClick}
+            />
         </div>
     );
 };

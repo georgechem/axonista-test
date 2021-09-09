@@ -6,15 +6,25 @@
   &__top {
     display: flex;
     flex-direction: column;
+    &__search {
+      display: flex;
+      justify-content: space-between;
+    }
     &__input {
       text-align: center;
       padding: $main-spacing;
       font: $font-level-1;
       color: $col-brand-2;
+      width: 100%;
       &:focus {
         outline: $col-level-1;
         background-color: $col-level-2;
       }
+    }
+    &__select {
+      padding: $main-spacing;
+      font: $font-level-1;
+      color: $col-brand-2;
     }
     &__buttons {
       display: flex;

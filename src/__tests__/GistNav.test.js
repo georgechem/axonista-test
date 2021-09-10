@@ -5,7 +5,6 @@ import {cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import GistsNav from "../commponents/GistNav/GistsNav";
 
-
 afterEach(cleanup);
 
 it('renders without crashing', () => {

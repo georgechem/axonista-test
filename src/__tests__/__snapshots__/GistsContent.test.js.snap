@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches Snapshot 1`] = `
+<div
+  className="gistsContent"
+>
+  <div
+    className="gistsContent__item"
+  >
+    <div
+      className="gistsContent__header"
+    >
+      <div
+        className="gistsContent__header__bar"
+      >
+        <img
+          alt="time_icon"
+          className="gistsContent__header_svgDate"
+          src={
+            Object {
+              "canInstrument": true,
+              "createTransformer": [Function],
+              "getCacheKey": [Function],
+              "getCacheKeyAsync": [Function],
+              "process": [Function],
+              "processAsync": [Function],
+            }
+          }
+        />
+        <span>
+          NaN/NaN/NaN
+        </span>
+      </div>
+      <div
+        className="gistsContent__header__bar"
+      >
+        <img
+          alt="person_icon"
+          src={
+            Object {
+              "canInstrument": true,
+              "createTransformer": [Function],
+              "getCacheKey": [Function],
+              "getCacheKeyAsync": [Function],
+              "process": [Function],
+              "processAsync": [Function],
+            }
+          }
+        />
+        <span />
+      </div>
+    </div>
+    <hr />
+    <div
+      className="gistContent__body"
+    >
+      <div
+        className="gistsContent__body__top"
+      >
+        <img
+          className="gistsContent__body__avatar"
+        />
+        <div
+          className="gistsContent__body__link"
+        >
+          <img
+            src={
+              Object {
+                "canInstrument": true,
+                "createTransformer": [Function],
+                "getCacheKey": [Function],
+                "getCacheKeyAsync": [Function],
+                "process": [Function],
+                "processAsync": [Function],
+              }
+            }
+          />
+          <a
+            target="_blank"
+          >
+            Go to Repository
+          </a>
+        </div>
+      </div>
+      <div
+        className="gistsContent__body__info"
+      >
+        <p>
+          updated:
+          NaN:NaN:NaN - 
+                NaN/NaN/NaN
+        </p>
+        <div
+          className="gistsContent__body__info__desc"
+        >
+          <p>
+            <em />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

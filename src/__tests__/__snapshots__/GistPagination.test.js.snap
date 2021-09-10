@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches Snapshot 1`] = `
+<div
+  className="gistPagination"
+>
+  <div
+    className="gistPagination__bar"
+  >
+    <div
+      className="gistPagination__bar__button border left"
+      onClick={[MockFunction]}
+    >
+      Prev
+    </div>
+    <div
+      className="gistPagination__bar__button border center"
+      data-testid="page"
+    >
+      1
+    </div>
+    <div
+      className="gistPagination__bar__button border right"
+      onClick={[MockFunction]}
+    >
+      Next
+    </div>
+  </div>
+</div>
+`;

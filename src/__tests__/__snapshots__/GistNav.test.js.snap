@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches Snapshot 1`] = `
+<div
+  className="gistNav"
+>
+  <div
+    className="gistNav__top"
+  >
+    <div
+      className="gistNav__top__search"
+    >
+      <input
+        className="gistNav__top__input"
+        id="inputSearch"
+        name="input"
+        onChange={[MockFunction]}
+        onKeyDown={[Function]}
+        type="text"
+      />
+      <select
+        className="gistNav__top__select"
+        id="itemsPerPage"
+        name="itemsPerPage"
+        onChange={[MockFunction]}
+      >
+        <option
+          value="5"
+        >
+          5
+        </option>
+        <option
+          value="10"
+        >
+          10
+        </option>
+        <option
+          value="30"
+        >
+          30
+        </option>
+        <option
+          value="100"
+        >
+          100
+        </option>
+      </select>
+    </div>
+    <div
+      className="gistNav__top__buttons"
+    >
+      <img
+        alt="icon order"
+        className="gistNav__top__buttons__sortOrder"
+        onClick={[MockFunction]}
+        src={
+          Object {
+            "canInstrument": true,
+            "createTransformer": [Function],
+            "getCacheKey": [Function],
+            "getCacheKeyAsync": [Function],
+            "process": [Function],
+            "processAsync": [Function],
+          }
+        }
+        title="Sort Order"
+      />
+      <div
+        className="gistNav__top__buttons__switchGroup"
+      >
+        <p>
+          Sort By: 
+        </p>
+        <img
+          className="gistNav__top__buttons__switchGroup__switch"
+          id="sortByDateSwitch"
+          onClick={[Function]}
+          src={
+            Object {
+              "canInstrument": true,
+              "createTransformer": [Function],
+              "getCacheKey": [Function],
+              "getCacheKeyAsync": [Function],
+              "process": [Function],
+              "processAsync": [Function],
+            }
+          }
+          title="Sort By Date"
+        />
+        <img
+          className="gistNav__top__buttons__switchGroup__switch"
+          id="sortByDescriptionSwitch"
+          onClick={[Function]}
+          src={
+            Object {
+              "canInstrument": true,
+              "createTransformer": [Function],
+              "getCacheKey": [Function],
+              "getCacheKeyAsync": [Function],
+              "process": [Function],
+              "processAsync": [Function],
+            }
+          }
+          title="Sort By Description"
+        />
+        <img
+          className="gistNav__top__buttons__switchGroup__switch"
+          id="sortByLoginSwitch"
+          onClick={[Function]}
+          src={
+            Object {
+              "canInstrument": true,
+              "createTransformer": [Function],
+              "getCacheKey": [Function],
+              "getCacheKeyAsync": [Function],
+              "process": [Function],
+              "processAsync": [Function],
+            }
+          }
+          title="Sort By Login"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

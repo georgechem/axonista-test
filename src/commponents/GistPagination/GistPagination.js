@@ -12,7 +12,10 @@ const GistPagination = ({onNextPageClick, page, onPrevPageClick}) => {
                     className="gistPagination__bar__button border left"
                     onClick={onPrevPageClick}
                 >Prev</div>
-                <div className="gistPagination__bar__button border center">{page}</div>
+                <div
+                    data-testid="page"
+                    className="gistPagination__bar__button border center"
+                >{page}</div>
                 <div
                     className="gistPagination__bar__button border right"
                     onClick={onNextPageClick}

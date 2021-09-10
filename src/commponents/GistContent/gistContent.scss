@@ -39,6 +39,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       &__avatar {
         max-width: 64px;
       }
@@ -47,9 +48,6 @@
         padding: $main-spacing 0;
         &__desc {
           padding-top: $main-spacing;
-        }
-        &__filesGroup {
-
         }
       }
       &__top {

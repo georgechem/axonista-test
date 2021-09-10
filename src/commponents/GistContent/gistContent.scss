@@ -20,6 +20,7 @@
     }
     &__header {
       display: flex;
+      flex-wrap: wrap;
       align-content: stretch;
       justify-content: space-between;
       background-color: $col-level-2;
@@ -31,7 +32,6 @@
         & > span {
           display: inline-block;
           margin: $secondary-spacing;
-          min-width: 200px;
         }
       }
     }

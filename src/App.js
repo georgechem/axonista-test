@@ -8,23 +8,38 @@ import './style.scss';
 const App = () => {
     const [gists, setGists] = useState([]);
     const [gistsCopy, setGistsCopy] = useState([]);
-    const [sortingOrder, setSortingOrder] = useState('desc');
-    const [sortingAttribute, setSortingAttribute] = useState('login');
     const [page, setPage] = useState(1);
-    const [perPage, setPerPage] = useState(5);
+    const [perPage, setPerPage] = useState(10);
     const [content, setContent] = useState('');
+    const [sortingOrder, setSortingOrder] = useState({direction: 'desc'});
+    const [sortingAttribute, setSortingAttribute] = useState({sortingCategory: 'login'});
 
+    /**
+     * array of elements ID for all SortBy Switches in Nav
+     * @type {string[]}
+     */
+    const allSwitches = ['sortByDateSwitch', 'sortByDescriptionSwitch', 'sortByLoginSwitch'];
 
-    const onSortingOrderChange = () => {
-        const el = document.getElementsByClassName('gistNav__top__buttons__sortOrder')[0];
-        if(sortingOrder === 'asc'){
-            setSortingOrder( 'desc');
-            el.classList.remove('rotate180deg');
-        }else{
-            setSortingOrder( 'asc');
-            el.classList.add('rotate180deg');
+    /**
+     * Remove certain class from all SortBy buttons
+     */
+    const turnOfAllSwitches = () => {
+        allSwitches.forEach((switchButton) => {
+            const el = document?.getElementById(switchButton);
+            if(el !== null){
+                el.classList.remove('turnedOn');
+            }
+        })
+    }
+
+    /**
+     * Restore all gists as user modifying input value
+     * @param event
+     */
+    const onBackSpaceClick = (event) => {
+        if(event.key === 'Backspace' || event.code === 'Backspace'){
+            setGists(gistsCopy);
         }
-        sortGists();
     }
 
     /**
@@ -33,13 +48,24 @@ const App = () => {
      */
     const onInputChange = (event) => {
         // if icon date selected do not sort with input text
-        if(sortingAttribute === 'date') return;
+        if(sortingAttribute.sortingCategory === 'date') return;
         setContent(event?.target?.value || '');
     }
 
-    useEffect(()=>{
-        matchGists();
-    }, [content, page, gistsCopy])
+    /**
+     * Set SortingAttribute & make button pressed by adding class
+     * @param elementId
+     * @param state
+     */
+    const onSortBy = (elementId, state) => {
+        const el = document?.getElementById(elementId);
+        if(el !== null){
+            turnOfAllSwitches();
+            el.classList.add('turnedOn');
+            setSortingAttribute(state);
+        }
+        sortGists();
+    }
 
     /**
      * Filter Gits to match user pattern
@@ -47,32 +73,60 @@ const App = () => {
      */
     const matchGists = (data) => {
         let findings = [];
-        if(sortingAttribute === 'login') findings = gistsCopy.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
-        else if(sortingAttribute === 'description') findings = gistsCopy.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
+        if(sortingAttribute.sortingCategory === 'login') findings = gistsCopy.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
+        else if(sortingAttribute.sortingCategory === 'description') findings = gistsCopy.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
         else findings = gistsCopy.filter(gist => true);
         setGists(findings);
     };
+
     /**
      * Sorting gists by - LOGIN | DATE | DESCRIPTION and ASC | DESC
      */
     const sortGists = () => {
+        const tmp = [...gistsCopy];
         const compareStrings = (a, b) => {
             if(a < b) return -1;
             if(a > b) return 1;
             return 0;
         }
 
-        if(sortingOrder === 'desc'){
-            if(sortingAttribute === 'login') gists.sort((a, b) => compareStrings(a?.owner?.login?.toLowerCase(), b?.owner?.login?.toLowerCase()));
-            if(sortingAttribute === 'date') gists.sort((a, b) => compareStrings(a?.updated_at, b?.updated_at));
-            if(sortingAttribute === 'description') gists.sort((a, b) => compareStrings(a?.description?.toLowerCase(), b?.description?.toLowerCase()));
+        if(sortingOrder.direction === 'desc'){
+            if(sortingAttribute.sortingCategory === 'login') tmp.sort((a, b) => compareStrings(a?.owner?.login?.toLowerCase(), b?.owner?.login?.toLowerCase()));
+            if(sortingAttribute.sortingCategory === 'date') tmp.sort((a, b) => compareStrings(a?.updated_at, b?.updated_at));
+            if(sortingAttribute.sortingCategory === 'description') tmp.sort((a, b) => compareStrings(a?.description?.toLowerCase(), b?.description?.toLowerCase()));
         }else{
-            if(sortingAttribute === 'login') gists.sort((a, b) => compareStrings(b?.owner?.login?.toLowerCase(), a?.owner?.login?.toLowerCase()));
-            if(sortingAttribute === 'date') gists.sort((a, b) => compareStrings(b?.updated_at, a?.updated_at));
-            if(sortingAttribute === 'description') gists.sort((a, b) => compareStrings(b?.description?.toLowerCase(), a?.description?.toLowerCase()));
+            if(sortingAttribute.sortingCategory === 'login') tmp.sort((a, b) => compareStrings(b?.owner?.login?.toLowerCase(), a?.owner?.login?.toLowerCase()));
+            if(sortingAttribute.sortingCategory === 'date') tmp.sort((a, b) => compareStrings(b?.updated_at, a?.updated_at));
+            if(sortingAttribute.sortingCategory === 'description') tmp.sort((a, b) => compareStrings(b?.description?.toLowerCase(), a?.description?.toLowerCase()));
         }
-        setGists(gists);
+        setGists(tmp);
     }
+    // Sort gists at direction sort change
+    useEffect(() => {
+        sortGists();
+    }, [sortingOrder, sortingAttribute])
+    /*
+    useEffect(() => {
+        sortGists();
+    },[page, perPage])*/
+
+    useEffect(() => {
+        const el = document.getElementById('sortOrderBtn');
+        el.classList.toggle('rotate180deg');
+    }, [sortingOrder]);
+
+    /**
+     * Make sure one of button is pressed when application starts
+     */
+    useEffect(()=>{
+        onSortBy('sortByLoginSwitch', sortingAttribute);
+    },[]);
+
+    useEffect(()=>{
+        matchGists();
+    }, [gistsCopy]);
+
+
     /**
      * NEXT page
      */
@@ -93,7 +147,7 @@ const App = () => {
     const onSelectPerPage = (e) => {
         const options = e.target.options;
         const index = e.target.options.selectedIndex;
-        const value = parseInt(options[index].value);
+        const value = parseInt(options[index].value) | 1;
         setPerPage(value);
     }
 
@@ -112,8 +166,9 @@ const App = () => {
             .then(res => res.json())
             .then(data => {
                 // filter data here also
-                setGists(data);
+                setGists([]);
                 setGistsCopy(data);
+                sortGists();
             })
             .catch(err => {
                 console.log(err);
@@ -123,14 +178,12 @@ const App = () => {
     return (
         <div>
             <GistsNav
-                gists={gists}
-                setGists={setGists}
-                gistsCopy={gistsCopy}
-                onSortingOrderChange={onSortingOrderChange}
-                sortingAttribute={sortingAttribute}
-                setSortingAttribute={setSortingAttribute}
+                perPage={perPage}
+                onSortBy={onSortBy}
                 onInputChange={onInputChange}
-                onSelectPerPage={onSelectPerPage}
+                onBackSpaceClick={onBackSpaceClick}
+                onSelectPerPageFn={onSelectPerPage}
+                sortingOrder={sortingOrder} setSortingOrder={setSortingOrder}
             />
             {gists?.map((gist, key) => <GistsContent
                 key={'gistKey_' + key}

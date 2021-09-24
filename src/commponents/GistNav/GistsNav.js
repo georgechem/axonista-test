@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import svgSortOrder from './icons/sort_black_24dp.svg';
@@ -8,68 +8,12 @@ import svgByPerson from './icons/person_black_24dp.svg';
 
 import './gistNav.scss';
 
-const GistsNav = ({
-                      setGists, gistsCopy,
-                      onSortingOrderChange, sortingAttribute,
-                      setSortingAttribute, onInputChange,
-                      onSelectPerPage,}) => {
+const GistsNav = (props) => {
 
-    /**
-     * array of elements ID for all SortBy button in Nav
-     * @type {string[]}
-     */
-    const allSwitches = ['sortByDateSwitch', 'sortByDescriptionSwitch', 'sortByLoginSwitch'];
+    const onSortingOrderChange = () => {
+        if(props.sortingOrder.direction === 'desc') props.setSortingOrder({direction: 'asc'});
+        else props.setSortingOrder({direction: 'desc'});
 
-    /**
-     * Remove certain class from all SortBy buttons
-     */
-    const turnOfAllSwitches = () => {
-        allSwitches.forEach((switchButton) => {
-            const el = document?.getElementById(switchButton);
-            if(el !== null){
-                el.classList.remove('turnedOn');
-            }
-        })
-    }
-    /**
-     * Make sure one of button is pressed when application starts
-     */
-    useEffect(()=>{
-        onSortBy('sortByLoginSwitch', sortingAttribute);
-    },[]);
-
-    /**
-     * Restore all gists as user modifying input value
-     * @param event
-     */
-    const onBackSpaceClick = (event) => {
-        if(event.key === 'Backspace' || event.code === 'Backspace'){
-            setGists(gistsCopy);
-        }
-    }
-    /**
-     * Set SortingAttribute & make button pressed by adding class
-     * @param elementId
-     * @param state
-     */
-    const onSortBy = (elementId, state) => {
-        const el = document?.getElementById(elementId);
-        if(el !== null){
-            turnOfAllSwitches();
-            el.classList.add('turnedOn');
-            setSortingAttribute(state);
-        }
-
-    }
-
-    const onSortByDateSwitchClick = () => {
-        onSortBy('sortByDateSwitch', 'date');
-    }
-    const onSortByDescriptionSwitchClick = () => {
-        onSortBy('sortByDescriptionSwitch', 'description');
-    }
-    const onSortByLoginSwitchClick = () => {
-        onSortBy('sortByLoginSwitch', 'login');
     }
 
     return (
@@ -81,14 +25,15 @@ const GistsNav = ({
                         className="gistNav__top__input"
                         type="text"
                         name="input"
-                        onChange={onInputChange}
-                        onKeyDown={onBackSpaceClick}
+                        onChange={props.onInputChange}
+                        onKeyDown={props.onBackSpaceClick}
                     />
                     <select
                         className="gistNav__top__select"
                         id="itemsPerPage"
                         name="itemsPerPage"
-                        onChange={onSelectPerPage}
+                        defaultValue={props.perPage}
+                        onChange={(e)=>{props.onSelectPerPageFn(e)}}
                     >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -98,9 +43,11 @@ const GistsNav = ({
                 </div>
                 <div className="gistNav__top__buttons">
                     <img
+                        id="sortOrderBtn"
                         title="Sort Order"
                         className="gistNav__top__buttons__sortOrder"
                         src={svgSortOrder}
+                        //onClick={props.onSetOrderChange}//
                         onClick={onSortingOrderChange}
                     alt="icon order"/>
                     <div className="gistNav__top__buttons__switchGroup">
@@ -110,21 +57,21 @@ const GistsNav = ({
                             title="Sort By Date"
                             className="gistNav__top__buttons__switchGroup__switch"
                             src={svgByDate}
-                            onClick={onSortByDateSwitchClick}
+                            onClick={() => props.onSortBy('sortByDateSwitch', {sortingCategory: 'date'})}
                         />
                         <img
                             id="sortByDescriptionSwitch"
                             title="Sort By Description"
                             className="gistNav__top__buttons__switchGroup__switch"
                             src={svgByDescription}
-                            onClick={onSortByDescriptionSwitchClick}
+                            onClick={() => props.onSortBy('sortByDescriptionSwitch', {sortingCategory: 'description'})}
                         />
                         <img
                             id="sortByLoginSwitch"
                             title="Sort By Login"
                             className="gistNav__top__buttons__switchGroup__switch"
                             src={svgByPerson}
-                            onClick={onSortByLoginSwitchClick}
+                            onClick={() => props.onSortBy('sortByLoginSwitch', {sortingCategory: 'login'})}
                         />
                     </div>
                 </div>
@@ -134,13 +81,7 @@ const GistsNav = ({
 };
 
 GistsNav.propTypes = {
-    setGists: PropTypes.func.isRequired,
-    gistsCopy: PropTypes.array.isRequired,
-    onSortingOrderChange: PropTypes.func.isRequired,
-    sortingAttribute: PropTypes.string.isRequired,
-    setSortingAttribute: PropTypes.func.isRequired,
-    onInputChange: PropTypes.func.isRequired,
-    onSelectPerPage: PropTypes.func.isRequired
+    onSelectPerPageFn: PropTypes.func.isRequired,
 }
 
 export default GistsNav;

@@ -15,14 +15,13 @@ exports[`matches Snapshot 1`] = `
         id="inputSearch"
         name="input"
         onChange={[MockFunction]}
-        onKeyDown={[Function]}
         type="text"
       />
       <select
         className="gistNav__top__select"
         id="itemsPerPage"
         name="itemsPerPage"
-        onChange={[MockFunction]}
+        onChange={[Function]}
       >
         <option
           value="5"
@@ -52,7 +51,7 @@ exports[`matches Snapshot 1`] = `
       <img
         alt="icon order"
         className="gistNav__top__buttons__sortOrder"
-        onClick={[MockFunction]}
+        id="sortOrderBtn"
         src={
           Object {
             "canInstrument": true,

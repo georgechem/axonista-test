@@ -9,33 +9,21 @@ import svgLink from './icons/link_black_24dp.svg';
 
 const GistsContent = ({gist}) => {
     /**
-     * Adds leading zero to number
-     * @param number
-     * @returns {string}
-     */
-    const addLeadingZero = (number) => {
-        let value = parseInt(number);
-        if(value < 10){
-            return ('0' + value.toString());
-        }else{
-            return value.toString();
-        }
-    }
-
-    /**
-     * Format date to be more user friendly
+     * Returns properly formatted date OR time - date OR N/A
      * @param dateString
      * @param mode
      * @returns {string}
      */
     const formatDate = (dateString, mode='date') => {
-        if(dateString !== null){
+        if(typeof dateString === 'string'){
             const date = new Date(dateString);
-            if(mode === 'date'){
-                return `${addLeadingZero(date.getDate())}/${addLeadingZero(date.getMonth() + 1)}/${date.getFullYear()}`;
-            }else{
-                return `${date.getHours()}:${addLeadingZero(date.getMinutes())}:${addLeadingZero(date.getSeconds())} - 
-                ${addLeadingZero(date.getDate())}/${addLeadingZero(date.getMonth() + 1)}/${date.getFullYear()}`;
+            if(date.toString() !== 'Invalid Date'){
+                if(mode === 'date'){
+                    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+                }else{
+                    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')} - 
+                ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+                }
             }
         }
         return 'N/A';

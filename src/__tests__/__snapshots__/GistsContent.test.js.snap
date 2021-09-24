@@ -28,7 +28,7 @@ exports[`matches Snapshot 1`] = `
           }
         />
         <span>
-          NaN/NaN/NaN
+          N/A
         </span>
       </div>
       <div
@@ -87,8 +87,7 @@ exports[`matches Snapshot 1`] = `
       >
         <p>
           updated:
-          NaN:NaN:NaN - 
-                NaN/NaN/NaN
+          N/A
         </p>
         <div
           className="gistsContent__body__info__desc"

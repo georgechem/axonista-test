@@ -6,6 +6,7 @@ import './style.scss';
 
 
 const App = () => {
+    const [ready, setReady] = useState(false);
     const [gists, setGists] = useState([]);
     const [gistsCopy, setGistsCopy] = useState([]);
     const [page, setPage] = useState(1);
@@ -13,6 +14,80 @@ const App = () => {
     const [content, setContent] = useState('');
     const [sortingOrder, setSortingOrder] = useState({direction: 'desc'});
     const [sortingAttribute, setSortingAttribute] = useState({sortingCategory: 'login'});
+
+
+    /**
+     * Fetch data from Github API
+     */
+    useEffect(()=>{
+        const url = `https://api.github.com/gists?page=${page}&per_page=${perPage}`;
+        fetch(url,{
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                // Sort data after fetching
+                const dataSorted = sortGists(true, data);
+                setGists(dataSorted);
+                setGistsCopy(dataSorted);
+                // Set state that data are fetched and ready
+                setReady(true);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    },[page, perPage]);
+
+    /**
+     * Sort Gists as sorting order OR/AND sorting attribute change
+     */
+    useEffect(() => {
+        //sortGists();
+    }, [sortingOrder, sortingAttribute])
+
+    /**
+     * Match Gists to pattern as any changes to input content
+     */
+    useEffect(() => {
+        //matchGists();
+    },[content])
+
+    /**
+     * Rotate sorting order icon as sorting order change
+     */
+    useEffect(() => {
+        const el = document.getElementById('sortOrderBtn');
+        el.classList.toggle('rotate180deg');
+    }, [sortingOrder]);
+
+    /**
+     * Make sure one of button is pressed when application starts
+     */
+    useEffect(()=>{
+        // Fire first soring indirectly by switching state
+        console.log('useEffect - onSortBy', gists);
+        onSortBy('sortByLoginSwitch', sortingAttribute);
+    },[]);
+
+    useEffect(() => {
+        //sortGists();
+        console.log(`sorting gists with page`, gists)
+    },[]);
+
+    useEffect(()=>{
+
+        // sort by user input
+        matchGists();
+        // sort by chosen icon
+        sortGists();
+        //setGists(gistsCopy);
+        console.log('gist copy READY', gists);
+    }, [ready, sortingOrder, sortingAttribute]);
+
 
     /**
      * array of elements ID for all SortBy Switches in Nav
@@ -64,7 +139,6 @@ const App = () => {
             el.classList.add('turnedOn');
             setSortingAttribute(state);
         }
-        sortGists();
     }
 
     /**
@@ -72,18 +146,21 @@ const App = () => {
      * @param data
      */
     const matchGists = (data) => {
+        const tmp = [...gistsCopy];
         let findings = [];
-        if(sortingAttribute.sortingCategory === 'login') findings = gistsCopy.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
-        else if(sortingAttribute.sortingCategory === 'description') findings = gistsCopy.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
-        else findings = gistsCopy.filter(gist => true);
+        if(sortingAttribute.sortingCategory === 'login') findings = tmp.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
+        else if(sortingAttribute.sortingCategory === 'description') findings = tmp.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
+        else findings = tmp.filter(gist => true);
         setGists(findings);
     };
 
     /**
      * Sorting gists by - LOGIN | DATE | DESCRIPTION and ASC | DESC
      */
-    const sortGists = () => {
-        const tmp = [...gistsCopy];
+    const sortGists = (fetchMode = false, data = []) => {
+        let tmp =[];
+        (!fetchMode) ? tmp = [...gistsCopy] : tmp = [...data];
+
         const compareStrings = (a, b) => {
             if(a < b) return -1;
             if(a > b) return 1;
@@ -99,32 +176,10 @@ const App = () => {
             if(sortingAttribute.sortingCategory === 'date') tmp.sort((a, b) => compareStrings(b?.updated_at, a?.updated_at));
             if(sortingAttribute.sortingCategory === 'description') tmp.sort((a, b) => compareStrings(b?.description?.toLowerCase(), a?.description?.toLowerCase()));
         }
-        setGists(tmp);
+        console.log(`gists sorted in sortGist `, tmp);
+        setGistsCopy(tmp);
+        if(fetchMode) return tmp;
     }
-    // Sort gists at direction sort change
-    useEffect(() => {
-        sortGists();
-    }, [sortingOrder, sortingAttribute])
-    /*
-    useEffect(() => {
-        sortGists();
-    },[page, perPage])*/
-
-    useEffect(() => {
-        const el = document.getElementById('sortOrderBtn');
-        el.classList.toggle('rotate180deg');
-    }, [sortingOrder]);
-
-    /**
-     * Make sure one of button is pressed when application starts
-     */
-    useEffect(()=>{
-        onSortBy('sortByLoginSwitch', sortingAttribute);
-    },[]);
-
-    useEffect(()=>{
-        matchGists();
-    }, [gistsCopy]);
 
 
     /**
@@ -151,29 +206,7 @@ const App = () => {
         setPerPage(value);
     }
 
-    /**
-     * Fetch data from Github API
-     */
-    useEffect(()=>{
-        const url = `https://api.github.com/gists?page=${page}&per_page=${perPage}`;
-        fetch(url,{
-            method: 'GET',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                // filter data here also
-                setGists([]);
-                setGistsCopy(data);
-                sortGists();
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    },[page, perPage]);
+
 
     return (
         <div>

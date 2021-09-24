@@ -25,8 +25,8 @@ const GistsNav = (props) => {
                         className="gistNav__top__input"
                         type="text"
                         name="input"
-                        onChange={props.onInputChange}
-                        onKeyDown={props.onBackSpaceClick}
+                        onChange={(event) => props.onInputChange(event)}
+                        onKeyDown={(event) => props.onBackSpaceClick(event)}
                     />
                     <select
                         className="gistNav__top__select"

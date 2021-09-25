@@ -35,12 +35,20 @@ const GistsContent = ({gist}) => {
             <div className="gistsContent__item">
                 <div className="gistsContent__header">
                     <div className="gistsContent__header__bar">
-                        <img className="gistsContent__header_svgDate" src={svgDate} alt="time_icon"/>
-                        <span>{formatDate(gist?.created_at)}</span>
+                        <img
+                            className="gistsContent__header_svgDate"
+                            src={svgDate}
+                            alt="time_icon"
+                        />
+                        <span
+                            title="updated At"
+                        >{formatDate(gist?.created_at)}</span>
                     </div>
                     <div className="gistsContent__header__bar">
                         <img src={svgUser} alt="person_icon"/>
-                        <span>{gist?.owner?.login}</span>
+                        <span
+                            title="owner login"
+                        >{gist?.owner?.login}</span>
                     </div>
                 </div>
                 <hr/>
@@ -55,7 +63,13 @@ const GistsContent = ({gist}) => {
                     <div className="gistsContent__body__info">
                         <p>updated:{formatDate(gist?.updated_at, 'full')}</p>
                         <div className="gistsContent__body__info__desc">
-                            <p><em>{gist?.description}</em></p>
+                            <p>
+                                <em
+                                    title="gist description"
+                                >
+                                    {gist?.description || 'description is not available'}
+                                </em>
+                            </p>
                         </div>
                     </div>
                 </div>

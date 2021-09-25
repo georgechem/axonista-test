@@ -26,6 +26,7 @@ const GistsNav = (props) => {
                         className="gistNav__top__input"
                         type="text"
                         name="input"
+                        title="user input"
                         onChange={(event) => props.onInputChange(event)}
                         onKeyDown={(event) => props.onBackSpaceClick(event)}
                     />
@@ -33,6 +34,7 @@ const GistsNav = (props) => {
                         className="gistNav__top__select"
                         id="itemsPerPage"
                         name="itemsPerPage"
+                        title="Items per page"
                         defaultValue={props.perPage}
                         onChange={(e)=>{props.onSelectPerPage(e)}}
                     >

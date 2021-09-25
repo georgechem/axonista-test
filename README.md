@@ -14,7 +14,8 @@
 
 <hr>
 
-###To install:
+### To install:
+
 1. You need installed node 16.10.0
 which you can get at: [https://nodejs.org/en/](https://nodejs.org/en/ "link to node")
 

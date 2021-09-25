@@ -2,102 +2,250 @@
 
 exports[`matches Snapshot 1`] = `
 <div
-  className="gistsContent"
+  className="gist"
 >
-  <div
-    className="gistsContent__item"
-  >
-    <div
-      className="gistsContent__header"
-    >
-      <div
-        className="gistsContent__header__bar"
+  <table>
+    <thead>
+      <tr
+        className="gist__row__header"
       >
-        <img
-          alt="time_icon"
-          className="gistsContent__header_svgDate"
-          src={
-            Object {
-              "canInstrument": true,
-              "createTransformer": [Function],
-              "getCacheKey": [Function],
-              "getCacheKeyAsync": [Function],
-              "process": [Function],
-              "processAsync": [Function],
-            }
-          }
-        />
-        <span>
-          N/A
-        </span>
-      </div>
-      <div
-        className="gistsContent__header__bar"
-      >
-        <img
-          alt="person_icon"
-          src={
-            Object {
-              "canInstrument": true,
-              "createTransformer": [Function],
-              "getCacheKey": [Function],
-              "getCacheKeyAsync": [Function],
-              "process": [Function],
-              "processAsync": [Function],
-            }
-          }
-        />
-        <span />
-      </div>
-    </div>
-    <hr />
-    <div
-      className="gistContent__body"
-    >
-      <div
-        className="gistsContent__body__top"
-      >
-        <img
-          className="gistsContent__body__avatar"
-        />
-        <div
-          className="gistsContent__body__link"
+        <th
+          className="gist__cell"
         >
-          <img
-            src={
-              Object {
-                "canInstrument": true,
-                "createTransformer": [Function],
-                "getCacheKey": [Function],
-                "getCacheKeyAsync": [Function],
-                "process": [Function],
-                "processAsync": [Function],
-              }
-            }
-          />
-          <a
-            target="_blank"
+          <div
+            className="gist__heading"
           >
-            Go to Repository
-          </a>
-        </div>
-      </div>
-      <div
-        className="gistsContent__body__info"
-      >
-        <p>
-          updated:
-          N/A
-        </p>
-        <div
-          className="gistsContent__body__info__desc"
+            <div
+              className="gist__heading-text"
+            >
+              <small>
+                Created At
+              </small>
+            </div>
+            <small
+              title="created at"
+            >
+              25/09/2021
+            </small>
+          </div>
+        </th>
+        <th
+          className="gist__cell"
         >
-          <p>
-            <em />
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div
+            className="gist__heading"
+          >
+            <div
+              className="gist__heading-text"
+            >
+              <small>
+                Avatar
+              </small>
+            </div>
+          </div>
+        </th>
+        <th
+          className="gist__cell"
+        >
+          <div
+            className="gist__heading"
+          >
+            <div
+              className="gist__heading-text"
+            >
+              <small>
+                Files
+              </small>
+            </div>
+          </div>
+        </th>
+        <th
+          className="gist__cell"
+        >
+          <div
+            className="gist__heading"
+          >
+            <div
+              className="gist__heading-text"
+            >
+              <small>
+                Links
+              </small>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="gist__row__body"
+      >
+        <td>
+          <div
+            className="gist__body"
+          />
+        </td>
+        <td>
+          <div
+            className="gist__body"
+          >
+            <img
+              alt="user avatar"
+              className="gist__avatar"
+              src="https://avatars.githubusercontent.com/u/3243601?v=4"
+              title="avatar"
+            />
+          </div>
+        </td>
+        <td>
+          <div
+            className="gist__body"
+          >
+            <ul
+              className="gist__body__list"
+            >
+              <li
+                className="gits__body__list__item"
+              >
+                <div
+                  className="gist__body__list__item-files"
+                >
+                  <small
+                    id="id20"
+                    onClick={[Function]}
+                  >
+                    as
+                  </small>
+                  <small
+                    className="hidden"
+                  >
+                    language: 
+                    n/a
+                  </small>
+                  <small
+                    className="hidden"
+                  >
+                    size: 
+                    0.0kB
+                  </small>
+                  <small
+                    className="hidden"
+                  >
+                    type: 
+                    text/plain
+                  </small>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div
+            className="gist__body"
+          >
+            <ul
+              className="gist__body__list"
+            >
+              <li>
+                <a
+                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a"
+                  target="_blank"
+                >
+                  Gist Url
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a/forks"
+                  target="_blank"
+                >
+                  Forks Url
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a/commits"
+                  target="_blank"
+                >
+                  Commits URL
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://gist.github.com/61214c3cd9da6076fc6f443ba310d10a"
+                  target="_blank"
+                >
+                  Html URL
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://api.github.com/users/annakhloyan/repos"
+                  target="_blank"
+                >
+                  Repos URL
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://api.github.com/users/annakhloyan"
+                  target="_blank"
+                >
+                  Owner URL
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr
+        className="gist__row__footer"
+      >
+        <td
+          className="gist__footer"
+        >
+          <div
+            className="gist__footer-text"
+          >
+            <small>
+              Last update
+            </small>
+            <span
+              title="last updated at"
+            >
+              <small>
+                18:26:24 - 
+                25/09/2021
+              </small>
+            </span>
+          </div>
+        </td>
+        <td>
+          <div
+            className="gist__footer-text"
+          >
+            <small>
+              Owner login
+            </small>
+            <span
+              title="owner login"
+            >
+              <small>
+                annakhloyan
+              </small>
+            </span>
+          </div>
+        </td>
+        <td>
+          <div />
+        </td>
+        <td>
+          <div />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
 `;

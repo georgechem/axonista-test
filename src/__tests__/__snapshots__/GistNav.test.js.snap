@@ -16,13 +16,16 @@ exports[`matches Snapshot 1`] = `
         name="input"
         onChange={[Function]}
         onKeyDown={[Function]}
+        title="user input"
         type="text"
       />
       <select
         className="gistNav__top__select"
+        defaultValue={5}
         id="itemsPerPage"
         name="itemsPerPage"
         onChange={[Function]}
+        title="Items per page"
       >
         <option
           value="5"

@@ -4,7 +4,6 @@ import GistsContent from "./commponents/GistContent/GistsContent";
 import GistPagination from "./commponents/GistPagination/GistPagination";
 import './style.scss';
 
-
 const App = () => {
     const [ready, setReady] = useState(false);
     const [gists, setGists] = useState([]);

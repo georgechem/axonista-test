@@ -1,65 +1,120 @@
 @import "../../var.scss";
 
-.gists {
-  &Content {
-    max-width: $container-width;
-    margin: 1em auto;
-    background-color: $col-level-1;
-    padding: $main-spacing;
-    border: 1px solid $col-level-2;
+$main-cell-line-height: 1.6em;
+$main-list-line-height: 1.4em;
 
-    &__item {
-      border: 1px solid $col-level-0;
-    }
-    & + hr {
-      border-color: $col-level-3;
-      margin: 1em 0;
-    }
+.gist {
+  overflow-x: auto;
+  max-width: $container-width;
+  margin: 1em auto;
+  background-color: $col-level-1;
+  padding: $secondary-spacing;
+  border: 1px solid $col-level-2;
+
+  &__cell {
+    vertical-align: center;
+  }
+  &__avatar {
+    width: $avatar-size;
+  }
+  &__row {
     &__header {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: stretch;
-      justify-content: space-between;
+      padding: $main-spacing;
       background-color: $col-level-2;
-      &__bar {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin: $secondary-spacing;
-        & > span {
-          display: inline-block;
-          margin: $secondary-spacing;
-        }
-      }
+      color: $col-level-3;
     }
     &__body {
+      padding: $main-spacing;
+      background-color: $col-level-1;
+      color: $col-level-3;
+    }
+    &__footer {
+      padding: $main-spacing;
+      background-color: $col-level-2;
+      color: $col-level-3;
+    }
+  }
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $main-spacing;
+    line-height: $main-cell-line-height;
+    &-text {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      &__avatar {
-        max-width: 64px;
+      justify-content: space-between;
+      & > small {
+        border-bottom: 1px solid $col-level-3;
       }
-      &__info {
-        border-top: 1px solid $col-level-2;
-        padding: $main-spacing 0;
-        &__desc {
-          padding-top: $main-spacing;
+      & > img {
+        margin-left: $main-spacing;
+        width: 24px;
+      }
+
+    }
+
+
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    &__list {
+      list-style-type: none;
+      padding: $secondary-spacing;
+      line-height: $main-list-line-height;
+      &__item {
+        padding: $secondary-spacing;
+        &-files {
+          display: flex;
+          flex-direction: column;
+          background-color: $col-level-0;
+          border: 1px dotted $col-level-3;
+          padding: $main-spacing;
+          & > small:first-child {
+            text-decoration: underline;
+            cursor: pointer;
+          }
         }
-      }
-      &__top {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        margin: $main-spacing;
-      }
-      &__top a {
-        color: $col-level-3;
-        padding: $main-spacing;
-      }
-      &__link {
-        display: flex;
+
       }
     }
   }
+  &__footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $main-spacing;
+    &-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      overflow: hidden;
+      line-height: $main-cell-line-height;
+      & > small {
+        border-bottom: 1px solid $col-level-3;
+      }
+    }
+
+  }
+}
+
+tr >th:nth-child(2), tr >td:nth-child(2) {
+  max-width: $avatar-size;
+}
+tr >th:nth-child(3), tr >td:nth-child(3) {
+  min-width: $column-files-min-width;
+}
+tr >th:nth-child(4), tr >td:nth-child(4) {
+  text-align: center;
+  min-width: $column-links-min-width;
+}
+.hidden {
+  display: none;
+  visibility: hidden;
 }

@@ -10,26 +10,26 @@ afterEach(cleanup);
 it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<GistsNav
-        sortingAttribute={''}
-        onSelectPerPage={jest.fn()}
-        setSortingAttribute={jest.fn()}
-        setGists={jest.fn()}
-        gistsCopy={[]}
+        perPage={5}
+        onSortingAttributeChange={jest.fn()}
         onInputChange={jest.fn()}
-        onSortingOrderChange={jest.fn()}
+        onBackSpaceClick={jest.fn()}
+        onSelectPerPage={jest.fn()}
+        sortingOrder={{}}
+        setSortingOrder={jest.fn()}
     />, div);
 });
 
 test('matches Snapshot', () => {
 
     const tree = renderer.create(<GistsNav
-        sortingAttribute={''}
-        onSelectPerPage={jest.fn()}
-        setSortingAttribute={jest.fn()}
-        setGists={jest.fn()}
-        gistsCopy={[]}
+        perPage={5}
+        onSortingAttributeChange={jest.fn()}
         onInputChange={jest.fn()}
-        onSortingOrderChange={jest.fn()}
+        onBackSpaceClick={jest.fn()}
+        onSelectPerPage={jest.fn()}
+        sortingOrder={{}}
+        setSortingOrder={jest.fn()}
     />).toJSON();
 
     expect(tree).toMatchSnapshot();

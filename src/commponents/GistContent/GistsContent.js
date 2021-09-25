@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import nextId from 'react-id-generator';
 
 import './gistContent.scss';
 
-import svgDate from './icons/schedule_black_24dp.svg';
-import svgUser from './icons/person_black_24dp.svg';
-import svgLink from './icons/link_black_24dp.svg';
-
 const GistsContent = ({gist}) => {
+
+    /**
+     * From react-id-generator by Tomek Mularczyk
+     * @type {string}
+     */
+    const htmlId = nextId();
 
     /**
      * Returns properly formatted date OR time - date OR N/A
@@ -29,52 +32,151 @@ const GistsContent = ({gist}) => {
         }
         return 'N/A';
     }
+    /**
+     * Reveals details of clicked file
+     * @param e
+     */
+    const onFilenameClick = (e) => {
+        const el = document.getElementById(e.target.id);
+        let next = el.nextSibling;
+        while(next){
+            next.classList.toggle('hidden');
+            next = next.nextSibling;
+        }
+
+    }
 
     return (
-        <div className="gistsContent">
-            <div className="gistsContent__item">
-                <div className="gistsContent__header">
-                    <div className="gistsContent__header__bar">
-                        <img
-                            className="gistsContent__header_svgDate"
-                            src={svgDate}
-                            alt="time_icon"
-                        />
-                        <span
-                            title="updated At"
-                        >{formatDate(gist?.created_at)}</span>
-                    </div>
-                    <div className="gistsContent__header__bar">
-                        <img src={svgUser} alt="person_icon"/>
-                        <span
-                            title="owner login"
-                        >{gist?.owner?.login}</span>
-                    </div>
-                </div>
-                <hr/>
-                <div className="gistContent__body">
-                    <div className="gistsContent__body__top">
-                        <img className="gistsContent__body__avatar" src={gist?.owner?.avatar_url}/>
-                        <div className="gistsContent__body__link">
-                            <img src={svgLink}/>
-                            <a href={gist?.owner?.html_url} target="_blank">Go to Repository</a>
-                        </div>
-                    </div>
-                    <div className="gistsContent__body__info">
-                        <p>updated:{formatDate(gist?.updated_at, 'full')}</p>
-                        <div className="gistsContent__body__info__desc">
-                            <p>
-                                <em
-                                    title="gist description"
-                                >
-                                    {gist?.description || 'description is not available'}
-                                </em>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+        <>
+            <div className="gist">
+                <table>
+                    <thead>
+                        <tr className="gist__row__header">
+                            <th className="gist__cell">
+                                <div className="gist__heading">
+                                    <div className="gist__heading-text">
+                                        <small>Created At</small>
+                                    </div>
+                                    <small
+                                        title="created at"
+                                    >
+                                        {formatDate(gist?.created_at)}
+                                    </small>
+
+                                </div>
+
+                            </th>
+                            <th className="gist__cell">
+                                <div className="gist__heading">
+                                    <div className="gist__heading-text">
+                                        <small>Avatar</small>
+                                    </div>
+                                </div>
+                            </th>
+                            <th className="gist__cell">
+                                <div className="gist__heading">
+                                    <div className="gist__heading-text">
+                                        <small>Files</small>
+                                    </div>
+                                </div>
+                            </th>
+                            <th className="gist__cell">
+                                <div className="gist__heading">
+                                    <div className="gist__heading-text">
+                                        <small>Links</small>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr className="gist__row__body">
+                        <td>
+                            <div
+                                className="gist__body"
+                            >
+                            </div>
+                        </td>
+                        <td>
+                            <div className="gist__body">
+                                <img
+                                    className="gist__avatar"
+                                    src={gist?.owner?.avatar_url}
+                                    alt="user avatar"
+                                    title="avatar"
+                                />
+                            </div>
+                        </td>
+                        <td>
+                            <div className="gist__body">
+                                <ul className="gist__body__list">
+                                    {Object?.values(gist?.files).map((file, key) =>
+                                        <li
+                                            className="gits__body__list__item"
+                                            key={'files_'+key}>
+                                            <div className="gist__body__list__item-files">
+                                                <small
+                                                    id={htmlId + key}
+                                                    onClick={onFilenameClick}
+                                                >{file?.filename?.slice(0,40) || 'n/a'}</small>
+                                                <small className="hidden">language: {file?.language?.slice(0,20) || 'n/a'}</small>
+                                                <small className="hidden">size: {((+parseInt(file?.size)/1024)?.toFixed(1) + 'kB')?.slice(0,20) || 'n/a'}</small>
+                                                <small className="hidden">type: {file?.type?.slice(0, 20) || 'n/a'}</small>
+                                            </div>
+                                        </li>)}
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="gist__body">
+                                <ul className="gist__body__list">
+                                    <li><a href={gist?.url} target="_blank">Gist Url</a></li>
+                                    <li><a href={gist?.forks_url} target="_blank">Forks Url</a></li>
+                                    <li><a href={gist?.commits_url} target="_blank">Commits URL</a></li>
+                                    <li><a href={gist?.html_url} target="_blank">Html URL</a></li>
+                                    <li><a href={gist?.owner?.repos_url} target="_blank">Repos URL</a></li>
+                                    <li><a href={gist?.owner?.url} target="_blank">Owner URL</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr className="gist__row__footer">
+                            <td className="gist__footer">
+                                <div className="gist__footer-text">
+                                    <small>Last update</small>
+                                    <span
+                                        title="last updated at"
+                                    >
+                                        <small>{formatDate(gist?.updated_at, 'full')}</small>
+                                </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="gist__footer-text">
+                                    <small>Owner login</small>
+                                    <span
+                                        title="owner login"
+                                    >
+                                        <small>{gist?.owner?.login || 'n/a'}</small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
             </div>
-        </div>
+        </>
     );
 };
 

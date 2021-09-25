@@ -110,7 +110,7 @@ const GistsContent = ({gist}) => {
                         <td>
                             <div className="gist__body">
                                 <ul className="gist__body__list">
-                                    {Object?.values(gist?.files).map((file, key) =>
+                                    {Object.values(gist?.files || {}).map((file, key) =>
                                         <li
                                             className="gits__body__list__item"
                                             key={'files_'+key}>

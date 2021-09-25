@@ -25,7 +25,7 @@ exports[`matches Snapshot 1`] = `
             <small
               title="created at"
             >
-              25/09/2021
+              N/A
             </small>
           </div>
         </th>
@@ -92,7 +92,6 @@ exports[`matches Snapshot 1`] = `
             <img
               alt="user avatar"
               className="gist__avatar"
-              src="https://avatars.githubusercontent.com/u/3243601?v=4"
               title="avatar"
             />
           </div>
@@ -103,40 +102,7 @@ exports[`matches Snapshot 1`] = `
           >
             <ul
               className="gist__body__list"
-            >
-              <li
-                className="gits__body__list__item"
-              >
-                <div
-                  className="gist__body__list__item-files"
-                >
-                  <small
-                    id="id20"
-                    onClick={[Function]}
-                  >
-                    as
-                  </small>
-                  <small
-                    className="hidden"
-                  >
-                    language: 
-                    n/a
-                  </small>
-                  <small
-                    className="hidden"
-                  >
-                    size: 
-                    0.0kB
-                  </small>
-                  <small
-                    className="hidden"
-                  >
-                    type: 
-                    text/plain
-                  </small>
-                </div>
-              </li>
-            </ul>
+            />
           </div>
         </td>
         <td>
@@ -148,7 +114,6 @@ exports[`matches Snapshot 1`] = `
             >
               <li>
                 <a
-                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a"
                   target="_blank"
                 >
                   Gist Url
@@ -156,7 +121,6 @@ exports[`matches Snapshot 1`] = `
               </li>
               <li>
                 <a
-                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a/forks"
                   target="_blank"
                 >
                   Forks Url
@@ -164,7 +128,6 @@ exports[`matches Snapshot 1`] = `
               </li>
               <li>
                 <a
-                  href="https://api.github.com/gists/61214c3cd9da6076fc6f443ba310d10a/commits"
                   target="_blank"
                 >
                   Commits URL
@@ -172,7 +135,6 @@ exports[`matches Snapshot 1`] = `
               </li>
               <li>
                 <a
-                  href="https://gist.github.com/61214c3cd9da6076fc6f443ba310d10a"
                   target="_blank"
                 >
                   Html URL
@@ -180,7 +142,6 @@ exports[`matches Snapshot 1`] = `
               </li>
               <li>
                 <a
-                  href="https://api.github.com/users/annakhloyan/repos"
                   target="_blank"
                 >
                   Repos URL
@@ -188,7 +149,6 @@ exports[`matches Snapshot 1`] = `
               </li>
               <li>
                 <a
-                  href="https://api.github.com/users/annakhloyan"
                   target="_blank"
                 >
                   Owner URL
@@ -216,8 +176,7 @@ exports[`matches Snapshot 1`] = `
               title="last updated at"
             >
               <small>
-                18:26:24 - 
-                25/09/2021
+                N/A
               </small>
             </span>
           </div>
@@ -233,7 +192,7 @@ exports[`matches Snapshot 1`] = `
               title="owner login"
             >
               <small>
-                annakhloyan
+                n/a
               </small>
             </span>
           </div>

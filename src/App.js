@@ -43,50 +43,24 @@ const App = () => {
     },[page, perPage]);
 
     /**
-     * Sort Gists as sorting order OR/AND sorting attribute change
-     */
-    useEffect(() => {
-        //sortGists();
-    }, [sortingOrder, sortingAttribute])
-
-    /**
-     * Match Gists to pattern as any changes to input content
-     */
-    useEffect(() => {
-        //matchGists();
-    },[content])
-
-    /**
-     * Rotate sorting order icon as sorting order change
-     */
-    useEffect(() => {
-        const el = document.getElementById('sortOrderBtn');
-        el.classList.toggle('rotate180deg');
-    }, [sortingOrder]);
-
-    /**
      * Make sure one of button is pressed when application starts
      */
     useEffect(()=>{
         // Fire first soring indirectly by switching state
-        console.log('useEffect - onSortBy', gists);
-        onSortBy('sortByLoginSwitch', sortingAttribute);
+        onSortBy('sortByLoginSwitch');
     },[]);
 
-    useEffect(() => {
-        //sortGists();
-        console.log(`sorting gists with page`, gists)
-    },[]);
-
+    /**
+     * Sort gists when:
+     * - Fetched and ready (When app loads AND after page{Pagination element} or per page{Nav element} has changed)
+     * - sorting order has changed (Nav element)
+     * - sorting attribute has changed (Nav element)
+     * - content of user input has changed (Nav element)
+     */
     useEffect(()=>{
-
-        // sort by user input
-        matchGists();
         // sort by chosen icon
         sortGists();
-        //setGists(gistsCopy);
-        console.log('gist copy READY', gists);
-    }, [ready, sortingOrder, sortingAttribute]);
+    }, [ready, sortingOrder, sortingAttribute, content]);
 
 
     /**
@@ -128,31 +102,27 @@ const App = () => {
     }
 
     /**
-     * Set SortingAttribute & make button pressed by adding class
-     * @param elementId
+     * Sorting attribute
+     * ({sortingCategory: 'date'} | {sortingCategory: 'description'} | {sortingCategory: 'login'} )
+     * @param e
      * @param state
      */
-    const onSortBy = (elementId, state) => {
+    const onSortingAttributeChange = (e, state) => {
+        onSortBy(e.target.id);
+        setSortingAttribute(state);
+    }
+
+    /**
+     * Make button pressed by adding class
+     * @param elementId
+     */
+    const onSortBy = (elementId) => {
         const el = document?.getElementById(elementId);
         if(el !== null){
             turnOfAllSwitches();
             el.classList.add('turnedOn');
-            setSortingAttribute(state);
         }
     }
-
-    /**
-     * Filter Gits to match user pattern
-     * @param data
-     */
-    const matchGists = (data) => {
-        const tmp = [...gistsCopy];
-        let findings = [];
-        if(sortingAttribute.sortingCategory === 'login') findings = tmp.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
-        else if(sortingAttribute.sortingCategory === 'description') findings = tmp.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
-        else findings = tmp.filter(gist => true);
-        setGists(findings);
-    };
 
     /**
      * Sorting gists by - LOGIN | DATE | DESCRIPTION and ASC | DESC
@@ -176,11 +146,15 @@ const App = () => {
             if(sortingAttribute.sortingCategory === 'date') tmp.sort((a, b) => compareStrings(b?.updated_at, a?.updated_at));
             if(sortingAttribute.sortingCategory === 'description') tmp.sort((a, b) => compareStrings(b?.description?.toLowerCase(), a?.description?.toLowerCase()));
         }
-        console.log(`gists sorted in sortGist `, tmp);
-        setGistsCopy(tmp);
         if(fetchMode) return tmp;
-    }
 
+        let findings = [];
+        if(sortingAttribute.sortingCategory === 'login') findings = tmp.filter(gist => (gist?.owner?.login?.toLowerCase().search(content) !== -1));
+        else if(sortingAttribute.sortingCategory === 'description') findings = tmp.filter(gist => gist?.description?.toLowerCase().search(content) !== -1);
+        else findings = tmp.filter(gist => true);
+
+        setGists(findings);
+    }
 
     /**
      * NEXT page
@@ -189,6 +163,7 @@ const App = () => {
         if((page * perPage) >= 2999) return;
         setPage(page + 1);
     }
+
     /**
      * PREV page
      */
@@ -196,6 +171,7 @@ const App = () => {
         if(page === 1) return;
         setPage(page - 1);
     }
+
     /**
      * Set elements per Page
      */
@@ -206,16 +182,14 @@ const App = () => {
         setPerPage(value);
     }
 
-
-
     return (
         <div>
             <GistsNav
                 perPage={perPage}
-                onSortBy={onSortBy}
+                onSortingAttributeChange={onSortingAttributeChange}
                 onInputChange={onInputChange}
                 onBackSpaceClick={onBackSpaceClick}
-                onSelectPerPageFn={onSelectPerPage}
+                onSelectPerPage={onSelectPerPage}
                 sortingOrder={sortingOrder} setSortingOrder={setSortingOrder}
             />
             {gists?.map((gist, key) => <GistsContent

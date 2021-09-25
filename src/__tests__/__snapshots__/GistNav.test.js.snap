@@ -14,7 +14,8 @@ exports[`matches Snapshot 1`] = `
         className="gistNav__top__input"
         id="inputSearch"
         name="input"
-        onChange={[MockFunction]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
         type="text"
       />
       <select
@@ -50,8 +51,9 @@ exports[`matches Snapshot 1`] = `
     >
       <img
         alt="icon order"
-        className="gistNav__top__buttons__sortOrder"
+        className="gistNav__top__buttons__sortOrder rotate180deg"
         id="sortOrderBtn"
+        onClick={[Function]}
         src={
           Object {
             "canInstrument": true,
@@ -71,6 +73,7 @@ exports[`matches Snapshot 1`] = `
           Sort By: 
         </p>
         <img
+          alt="icon of calendar"
           className="gistNav__top__buttons__switchGroup__switch"
           id="sortByDateSwitch"
           onClick={[Function]}
@@ -87,6 +90,7 @@ exports[`matches Snapshot 1`] = `
           title="Sort By Date"
         />
         <img
+          alt="icon of paper sheet"
           className="gistNav__top__buttons__switchGroup__switch"
           id="sortByDescriptionSwitch"
           onClick={[Function]}
@@ -103,6 +107,7 @@ exports[`matches Snapshot 1`] = `
           title="Sort By Description"
         />
         <img
+          alt="icon of user"
           className="gistNav__top__buttons__switchGroup__switch"
           id="sortByLoginSwitch"
           onClick={[Function]}

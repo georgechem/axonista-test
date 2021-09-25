@@ -8,6 +8,7 @@ import svgUser from './icons/person_black_24dp.svg';
 import svgLink from './icons/link_black_24dp.svg';
 
 const GistsContent = ({gist}) => {
+
     /**
      * Returns properly formatted date OR time - date OR N/A
      * @param dateString

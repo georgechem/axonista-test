@@ -30,6 +30,8 @@ const App = () => {
             .then(res => res.json())
             .then(data => {
                 // Sort data after fetching
+                if(!Array.isArray(data)) return;
+                //console.log(data);
                 const dataSorted = sortGists(true, data);
                 setGists(dataSorted);
                 setGistsCopy(dataSorted);
@@ -156,25 +158,10 @@ const App = () => {
     }
 
     /**
-     * NEXT page
-     */
-    const onNextPageClick = () => {
-        if((page * perPage) >= 2999) return;
-        setPage(page + 1);
-    }
-
-    /**
-     * PREV page
-     */
-    const onPrevPageClick = () => {
-        if(page === 1) return;
-        setPage(page - 1);
-    }
-
-    /**
      * Set elements per Page
      */
     const onSelectPerPage = (e) => {
+        console.log(e.target.options);
         const options = e.target.options;
         const index = e.target.options.selectedIndex;
         const value = parseInt(options[index].value) | 1;
@@ -190,15 +177,16 @@ const App = () => {
                 onBackSpaceClick={onBackSpaceClick}
                 onSelectPerPage={onSelectPerPage}
                 sortingOrder={sortingOrder} setSortingOrder={setSortingOrder}
+                sortingAttribute={sortingAttribute}
             />
             {gists?.map((gist, key) => <GistsContent
                 key={'gistKey_' + key}
                 gist={gist}
             />)}
             <GistPagination
-                onNextPageClick={onNextPageClick}
                 page={page}
-                onPrevPageClick={onPrevPageClick}
+                setPage={setPage}
+                perPage={perPage}
             />
         </div>
     );

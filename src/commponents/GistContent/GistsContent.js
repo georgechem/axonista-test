@@ -118,7 +118,7 @@ const GistsContent = ({gist}) => {
                                                 <small
                                                     id={htmlId + key}
                                                     onClick={onFilenameClick}
-                                                >{file?.filename?.slice(0,40) || 'n/a'}</small>
+                                                >{file?.filename?.slice(0,25) || 'n/a'}</small>
                                                 <small className="hidden">language: {file?.language?.slice(0,20) || 'n/a'}</small>
                                                 <small className="hidden">size: {((+parseInt(file?.size)/1024)?.toFixed(1) + 'kB')?.slice(0,20) || 'n/a'}</small>
                                                 <small className="hidden">type: {file?.type?.slice(0, 20) || 'n/a'}</small>

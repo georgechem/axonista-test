@@ -12,6 +12,7 @@ exports[`matches Snapshot 1`] = `
     >
       <input
         className="gistNav__top__input"
+        data-testid="nav-input"
         id="inputSearch"
         name="input"
         onChange={[Function]}
@@ -21,6 +22,7 @@ exports[`matches Snapshot 1`] = `
       />
       <select
         className="gistNav__top__select"
+        data-testid="nav-select"
         defaultValue={5}
         id="itemsPerPage"
         name="itemsPerPage"
@@ -28,21 +30,25 @@ exports[`matches Snapshot 1`] = `
         title="Items per page"
       >
         <option
+          data-testid="navOption5"
           value="5"
         >
           5
         </option>
         <option
+          data-testid="navOption10"
           value="10"
         >
           10
         </option>
         <option
+          data-testid="navOption30"
           value="30"
         >
           30
         </option>
         <option
+          data-testid="navOption100"
           value="100"
         >
           100
@@ -55,6 +61,7 @@ exports[`matches Snapshot 1`] = `
       <img
         alt="icon order"
         className="gistNav__top__buttons__sortOrder rotate180deg"
+        data-testid="nav-sortOrderBtn"
         id="sortOrderBtn"
         onClick={[Function]}
         src={
@@ -73,11 +80,14 @@ exports[`matches Snapshot 1`] = `
         className="gistNav__top__buttons__switchGroup"
       >
         <p>
-          Sort By: 
+          <small
+            data-testid="nav-sortingAttribute"
+          />
         </p>
         <img
           alt="icon of calendar"
           className="gistNav__top__buttons__switchGroup__switch"
+          data-testid="nav-sortByDateSwitch"
           id="sortByDateSwitch"
           onClick={[Function]}
           src={
@@ -95,6 +105,7 @@ exports[`matches Snapshot 1`] = `
         <img
           alt="icon of paper sheet"
           className="gistNav__top__buttons__switchGroup__switch"
+          data-testid="nav-sortByDescriptionSwitch"
           id="sortByDescriptionSwitch"
           onClick={[Function]}
           src={
@@ -112,6 +123,7 @@ exports[`matches Snapshot 1`] = `
         <img
           alt="icon of user"
           className="gistNav__top__buttons__switchGroup__switch"
+          data-testid="nav-sortByLoginSwitch"
           id="sortByLoginSwitch"
           onClick={[Function]}
           src={

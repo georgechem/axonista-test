@@ -9,19 +9,21 @@ exports[`matches Snapshot 1`] = `
   >
     <div
       className="gistPagination__bar__button border left"
-      onClick={[MockFunction]}
+      data-testid="prevPage"
+      onClick={[Function]}
     >
       Prev
     </div>
     <div
       className="gistPagination__bar__button border center"
-      data-testid="page"
+      data-testid="pageValue"
     >
       1
     </div>
     <div
       className="gistPagination__bar__button border right"
-      onClick={[MockFunction]}
+      data-testid="nextPage"
+      onClick={[Function]}
     >
       Next
     </div>

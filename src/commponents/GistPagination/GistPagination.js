@@ -3,20 +3,38 @@ import PropTypes from 'prop-types';
 
 import './gistPagination.scss';
 
-const GistPagination = ({onNextPageClick, page, onPrevPageClick}) => {
+const GistPagination = (props) => {
+
+    /**
+     * NEXT page
+     */
+    const onNextPageClick = () => {
+        if((props.page * props.perPage) >= 2999) return;
+        props.setPage(props.page + 1);
+    }
+
+    /**
+     * PREV page
+     */
+    const onPrevPageClick = () => {
+        if(props.page === 1) return;
+        props.setPage(props.page - 1);
+    }
 
     return (
         <div className="gistPagination">
             <div className="gistPagination__bar">
                 <div
+                    data-testid="prevPage"
                     className="gistPagination__bar__button border left"
                     onClick={onPrevPageClick}
                 >Prev</div>
                 <div
-                    data-testid="page"
+                    data-testid="pageValue"
                     className="gistPagination__bar__button border center"
-                >{page}</div>
+                >{props.page}</div>
                 <div
+                    data-testid="nextPage"
                     className="gistPagination__bar__button border right"
                     onClick={onNextPageClick}
                 >Next</div>
@@ -26,9 +44,9 @@ const GistPagination = ({onNextPageClick, page, onPrevPageClick}) => {
 };
 
 GistPagination.propTypes = {
-    onNextPageClick: PropTypes.func.isRequired,
     page: PropTypes.number.isRequired,
-    onPrevPageClick: PropTypes.func.isRequired
+    setPage: PropTypes.func.isRequired,
+    perPage: PropTypes.number.isRequired
 }
 
 export default GistPagination;

@@ -22,6 +22,7 @@ const GistsNav = (props) => {
             <div className="gistNav__top">
                 <div className="gistNav__top__search">
                     <input
+                        data-testid="nav-input"
                         id="inputSearch"
                         className="gistNav__top__input"
                         type="text"
@@ -31,6 +32,7 @@ const GistsNav = (props) => {
                         onKeyDown={(event) => props.onBackSpaceClick(event)}
                     />
                     <select
+                        data-testid="nav-select"
                         className="gistNav__top__select"
                         id="itemsPerPage"
                         name="itemsPerPage"
@@ -38,14 +40,15 @@ const GistsNav = (props) => {
                         defaultValue={props.perPage}
                         onChange={(e)=>{props.onSelectPerPage(e)}}
                     >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="100">100</option>
+                        <option data-testid="navOption5" value="5">5</option>
+                        <option data-testid="navOption10" value="10">10</option>
+                        <option data-testid="navOption30" value="30">30</option>
+                        <option data-testid="navOption100" value="100">100</option>
                     </select>
                 </div>
                 <div className="gistNav__top__buttons">
                     <img
+                        data-testid="nav-sortOrderBtn"
                         id="sortOrderBtn"
                         title="Sort Order"
                         className="gistNav__top__buttons__sortOrder rotate180deg"
@@ -53,8 +56,9 @@ const GistsNav = (props) => {
                         onClick={onSortingOrderChange}
                     alt="icon order"/>
                     <div className="gistNav__top__buttons__switchGroup">
-                        <p>Sort By:&nbsp;</p>
+                        <p><small data-testid="nav-sortingAttribute">{props.sortingAttribute?.sortingCategory}</small></p>
                         <img
+                            data-testid="nav-sortByDateSwitch"
                             id="sortByDateSwitch"
                             alt="icon of calendar"
                             title="Sort By Date"
@@ -63,6 +67,7 @@ const GistsNav = (props) => {
                             onClick={(e) => props.onSortingAttributeChange(e, {sortingCategory: 'date'})}
                         />
                         <img
+                            data-testid="nav-sortByDescriptionSwitch"
                             id="sortByDescriptionSwitch"
                             alt="icon of paper sheet"
                             title="Sort By Description"
@@ -71,6 +76,7 @@ const GistsNav = (props) => {
                             onClick={(e) => props.onSortingAttributeChange(e, {sortingCategory: 'description'})}
                         />
                         <img
+                            data-testid="nav-sortByLoginSwitch"
                             id="sortByLoginSwitch"
                             alt="icon of user"
                             title="Sort By Login"
